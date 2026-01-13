@@ -1,0 +1,5 @@
+Video rendering is CPU-intensive. Every time the CPU has to "walk the page tables" because of a TLB Miss, it wastes hundreds of clock cycles and generates heat.
+​Design Decision: You leverage the fact that 16KB pages allow the Translation Lookaside Buffer (TLB) to "see" more memory at once.
+​Practical Example: During a video export, the CPU is hammering the same large buffers of pixel data.
+​On a PC: The small 4KB pages "thrash" the TLB. The CPU spends 5% of its time just doing "address bookkeeping," generating heat for no productive work.
+​On Apple Silicon: The 16KB pages keep the entire frame buffer "mapped" in the hardware cache. The CPU stays in its "high-performance" state longer because it isn't waiting on the MMU. This is why a MacBook can export video faster without the fans kicking in immediately.
