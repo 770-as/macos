@@ -1,0 +1,4 @@
+When your 8GB iPhone is running Final Cut Pro alongside 20 Safari tabs, the RAM fills up. A traditional OS would start "swapping" to the SSD, which is slow and wears out the drive.
+​The Design Decision: Instead of swapping, you utilize Apple Silicon’s hardware-accelerated WKdm compression.
+​Practical Example: The kernel identifies "cold" memory (those background Safari tabs). Instead of moving them to the SSD, it uses a dedicated hardware block to compress that 2GB of data into 1GB in microseconds.
+​The "Feel": To the user, the system still feels like it has 16GB of "effective" RAM because decompressing a 16KB page from RAM is significantly faster than reading a 4KB page from an SSD.
