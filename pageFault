@@ -1,0 +1,6 @@
+ The Page Fault: The "Seamless" Scrub
+​Imagine you are scrubbing through a 4K ProRes timeline. The video frame data is too large to fit in RAM entirely, so it is mapped to a file on the SSD using mmap().
+​The Scenario: You drag the playhead to a new section. The CPU tries to access a memory address for a video frame that isn't currently in physical RAM.
+​The Hardware Trigger: The Memory Management Unit (MMU) detects the missing mapping and raises a Page Fault exception.
+​The 16KB Advantage: In a 4KB system, a single 4K frame (roughly 8MB uncompressed) would trigger 2,048 separate page faults to bring that data in. In your 16KB XNU system, it only triggers 512 faults.
+​The Kernel Action: You write the "Fault Handler" in the Mach layer. Instead of 2,048 slow trips to the SSD, the kernel handles 1/4th the amount of "paperwork." This is why scrubbing feels "sticky" on a PC but "fluid" on Apple Silicon.
